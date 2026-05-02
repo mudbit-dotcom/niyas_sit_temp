@@ -20,24 +20,35 @@ const tags = getTags(posts);
 	<body>
 		<Header title={title} />
 		<main>
+			<img class="home-hero" src="/IMG_5380.png" alt="Niya Doyle" width="1200" height="800" />
 			<About />
 
 			<br />
 
-			<h3>Here's my most recent posts</h3>
+			<h3>Check out some of my work!</h3>
 
 			<HomePosts allPosts={posts} />
 
 			<p class="center">
-				You can also <a href="https://blahg.netlify.app/rss.xml">
-					subscribe with RSS!
+				Have a pitch or tip? Email me at niyadoyle@gmail.com 🩷
 				</a>
 			</p>
 			<br />
 
-			<Tags tags={tags} all />
+		
 		</main>
 		<Footer />
 		<ColorScript />
 	</body>
 </html>
+
+<style>
+	.home-hero {
+		display: block;
+		width: min(280px, 70vw);
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+		margin: 0.75rem auto 1.25rem;
+		border-radius: 999px;
+	}
+</style>

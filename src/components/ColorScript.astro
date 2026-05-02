@@ -17,8 +17,97 @@
 		});
 	}
 
+	function addSparkleStyles() {
+		if (document.getElementById("sparkle-cursor-styles")) return;
+
+		const style = document.createElement("style");
+		style.id = "sparkle-cursor-styles";
+		style.textContent = `
+			.sparkle-cursor {
+				position: fixed;
+				width: 10px;
+				height: 10px;
+				pointer-events: none;
+				z-index: 9999;
+				opacity: 0;
+				transform: translate(-50%, -50%) scale(0.6);
+				animation: sparkle-pop 650ms ease-out forwards;
+			}
+
+			.sparkle-cursor::before,
+			.sparkle-cursor::after {
+				content: "";
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				background: currentColor;
+				transform: translate(-50%, -50%);
+			}
+
+			.sparkle-cursor::before {
+				width: 2px;
+				height: 10px;
+			}
+
+			.sparkle-cursor::after {
+				width: 10px;
+				height: 2px;
+			}
+
+			@keyframes sparkle-pop {
+				0% {
+					opacity: 0.95;
+					transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+				}
+				100% {
+					opacity: 0;
+					transform: translate(-50%, -50%) scale(1.7) rotate(30deg);
+				}
+			}
+		`;
+
+		document.head.appendChild(style);
+	}
+
+	function createSparkle(x, y) {
+		const sparkle = document.createElement("span");
+		sparkle.className = "sparkle-cursor";
+		sparkle.style.left = `${x}px`;
+		sparkle.style.top = `${y}px`;
+		sparkle.style.color = getRandomColor();
+		document.body.appendChild(sparkle);
+
+		window.setTimeout(() => sparkle.remove(), 700);
+	}
+
+	function setSparkleCursorListener() {
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+
+		if (prefersReducedMotion || isCoarsePointer) return;
+
+		addSparkleStyles();
+
+		let lastX = 0;
+		let lastY = 0;
+		let lastTime = 0;
+
+		document.addEventListener("mousemove", (event) => {
+			const now = performance.now();
+			const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY);
+
+			if (now - lastTime < 32 || distance < 18) return;
+
+			lastX = event.clientX;
+			lastY = event.clientY;
+			lastTime = now;
+			createSparkle(lastX, lastY);
+		});
+	}
+
 	(function () {
 		setRandomLinkColor();
 		setColorHoverListener();
+		setSparkleCursorListener();
 	})();
 </script>
