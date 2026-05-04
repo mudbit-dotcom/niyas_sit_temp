@@ -3,8 +3,8 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://blahg.netlify.app/",
-	base: "/",
+	site: "hhttps://github.com/mudbit-dotcom",
+	base: "/niyas_sit_temp",
 	integrations: [sitemap()],
 	markdown: {
 		shikiConfig: {
