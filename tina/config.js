@@ -1,4 +1,7 @@
 import { defineConfig } from "tinacms";
+import dotenv from "dotenv";
+
+dotenv.config({ path: ".env.local" });
 
 // Your hosting provider likely exposes this as an environment variable
 const branch = process.env.HEAD || "main";

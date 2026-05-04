@@ -9,6 +9,10 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+      TINATOKEN: ${{ secrets.TINATOKEN }}
+      TINASEARCH: ${{ secrets.TINASEARCH }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -17,16 +21,10 @@ jobs:
       - run: npm install
       - run: npm run build
       - name: Validate Tina env (no values)
-        env:
-          TINACLIENTID: ${{ secrets.TINACLIENTID }}
-          TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINACLIENTID }}
-          TINATOKEN: ${{ secrets.TINATOKEN }}
-          TINA_TOKEN: ${{ secrets.TINATOKEN }}
-          TINASEARCH: ${{ secrets.TINASEARCH }}
         run: |
-          node -e "console.log('TINACLIENTID set:', !!process.env.TINACLIENTID)"
+          node -e "console.log('TINA_CLIENT_ID set:', !!process.env.TINA_CLIENT_ID)"
           node -e "console.log('TINATOKEN set:', !!process.env.TINATOKEN)"
-          test -n "${TINACLIENTID}" || (echo "ERROR: TINACLIENTID is empty in this job" && exit 1)
+          test -n "${TINA_CLIENT_ID}" || (echo "ERROR: TINA_CLIENT_ID is empty in this job" && exit 1)
           test -n "${TINATOKEN}" || (echo "ERROR: TINATOKEN is empty in this job" && exit 1)
       - uses: actions/upload-pages-artifact@v3
         with:
