@@ -1,7 +1,14 @@
 import { defineConfig } from "tinacms";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.local" });
+// Load .env.local if it exists (for local development)
+// In GitHub Actions, environment variables are set directly via secrets
+// dotenv.config() won't throw if the file doesn't exist
+try {
+	dotenv.config({ path: ".env.local" });
+} catch (e) {
+	// Ignore errors (file doesn't exist in GitHub Actions)
+}
 
 // Your hosting provider likely exposes this as an environment variable
 const branch = process.env.HEAD || "main";
