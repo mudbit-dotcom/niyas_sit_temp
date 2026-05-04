@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      HEAD: ${{ github.ref_name }}
       TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
       TINATOKEN: ${{ secrets.TINATOKEN }}
       TINASEARCH: ${{ secrets.TINASEARCH }}
@@ -19,13 +20,16 @@ jobs:
         with:
           node-version: 18
       - run: npm install
-      - run: npm run build
-      - name: Validate Tina env (no values)
+      - name: Validate Tina env (presence only)
         run: |
           node -e "console.log('TINA_CLIENT_ID set:', !!process.env.TINA_CLIENT_ID)"
           node -e "console.log('TINATOKEN set:', !!process.env.TINATOKEN)"
+          node -e "console.log('TINASEARCH set:', !!process.env.TINASEARCH)"
+          node -e "console.log('HEAD branch:', process.env.HEAD || '(unset)')"
           test -n "${TINA_CLIENT_ID}" || (echo "ERROR: TINA_CLIENT_ID is empty in this job" && exit 1)
           test -n "${TINATOKEN}" || (echo "ERROR: TINATOKEN is empty in this job" && exit 1)
+          test -n "${TINASEARCH}" || (echo "ERROR: TINASEARCH is empty in this job" && exit 1)
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

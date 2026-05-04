@@ -10,8 +10,8 @@ try {
 	// Ignore errors (file doesn't exist in GitHub Actions)
 }
 
-// Your hosting provider likely exposes this as an environment variable
-const branch = process.env.HEAD || "main";
+// Prefer CI-provided branch names when available.
+const branch = process.env.HEAD || process.env.GITHUB_REF_NAME || "main";
 const apiURL =
 	process.env.NODE_ENV == "development"
 		? "http://localhost:4321/"
