@@ -2,11 +2,15 @@ import { defineConfig } from "tinacms";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch = process.env.HEAD || "main";
+const apiURL =
+	process.env.NODE_ENV == "development"
+		? "http://localhost:4321/"
+		: `https://content.tinajs.io/content/${process.env.TINA_CLIENT_ID}/github/${branch}`;
 
 export default defineConfig({
 	branch,
-	clientId: process.env.TINACLIENTID, // Get this from tina.io
-	token: process.env.TINATOKEN, // Get this from tina.io
+	clientId: process.env.TINA_CLIENT_ID, // 
+	token: process.env.TINATOKEN, // 
 
 	build: {
 		outputFolder: "admin",
