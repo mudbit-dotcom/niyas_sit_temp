@@ -18,8 +18,11 @@ jobs:
       - run: npm run build
       - name: Validate Tina env (no values)
         env:
+          env:
           TINACLIENTID: ${{ secrets.TINACLIENTID }}
+          TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINACLIENTID }}
           TINATOKEN: ${{ secrets.TINATOKEN }}
+          TINA_TOKEN: ${{ secrets.TINATOKEN }}
           TINASEARCH: ${{ secrets.TINASEARCH }}
         run: |
           node -e "console.log('TINACLIENTID set:', !!process.env.TINACLIENTID)"
