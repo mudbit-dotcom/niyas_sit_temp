@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
 	site: "http://niyadoyle.com/",
-	base: "/",
+	base: "",
 	integrations: [sitemap()],
 	markdown: {
 		shikiConfig: {
