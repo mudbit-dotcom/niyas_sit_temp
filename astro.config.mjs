@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://github.com/mudbit-dotcom",
+	site: "http://niyadoyle.com/",
 	base: "/niyas_sit_temp",
 	integrations: [sitemap()],
 	markdown: {
